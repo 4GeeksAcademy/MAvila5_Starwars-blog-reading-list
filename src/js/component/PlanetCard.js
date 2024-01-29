@@ -9,7 +9,7 @@ function PlanetCard({ planet, removeFavorite }) {
 
     return (
         <Card style={{ width: '18rem', marginBottom: '1rem' }}>
-            <Card.Img variant="top" src={`https://starwars-visualguide.com/assets/img/planets/${planet.id}.jpg`} />
+            <Card.Img variant="top" src={`...`} className="img-thumbnail" />
             <Card.Body>
                 <Card.Title>{planet.name}</Card.Title>
                 <ListGroup className="list-group-flush">

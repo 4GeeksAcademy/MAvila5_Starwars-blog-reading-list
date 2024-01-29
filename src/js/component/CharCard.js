@@ -9,7 +9,7 @@ function CharCard({ character, removeFavorite }) {
 
     return (
         <Card style={{ width: '18rem', marginBottom: '1rem' }}>
-            <Card.Img variant="top" src={`https://starwars-visualguide.com/assets/img/characters/${character.id}.jpg`} />
+            <Card.Img variant="top" src={`...`} className="img-thumbnail" />
             <Card.Body>
                 <Card.Title>{character.name}</Card.Title>
                 <ListGroup className="list-group-flush">

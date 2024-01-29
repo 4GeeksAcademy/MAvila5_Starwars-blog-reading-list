@@ -9,11 +9,11 @@ const App = () => {
     return (
         <Router>
             <Layout>
-                <Switch>
-                    <Route exact path="/" component={HomePage} />
-                    <Route path="/details/:id" component={DetailsPage} />
-                    <Route path="/favorites" component={FavoritesPage} />
-                </Switch>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/details/:id" element={<DetailsPage />} />
+                    <Route path="/favorites" element={<FavoritesPage />} />
+                </Routes>
             </Layout>
         </Router>
     );

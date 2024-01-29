@@ -5,7 +5,7 @@ import PlanetCard from '../component/PlanetCard';
 
 function HomePage() {
   // Funcation to store data for people, vehicles, and planets.
-  const { favorites, addFavorite, removeFavorite } = useContext(FavoritesContext);
+  const { addFavorite } = useContext(FavoritesContext);
   const [people, setPeople] = useState([]);
   const [planets, setPlanets] = useState([]);
 

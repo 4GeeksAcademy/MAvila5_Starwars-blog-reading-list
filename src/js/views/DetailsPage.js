@@ -40,7 +40,7 @@ function DetailsPage() {
             <Row className="justify-content-md-center my-5">
                 <Col md={6}>
                     <Card>
-                        <Card.Img variant="top" src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+                        <Card.Img variant="top" src={`...`} className="img-thumbnail" />
                         <Card.Body>
                             <Card.Title>{characterDetails.name}</Card.Title>
                             <Card.Text>
