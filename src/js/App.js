@@ -1,22 +1,18 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Layout from '../js/layout/Layout';
-import HomePage from '../js/views/HomePage';
-import DetailsPage from '../js/views/DetailsPage';
-import FavoritesPage from '../js/views/FavoritesPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './layout/Layout';
+import HomePage from './views/HomePage';
+import DetailsPage from './views/DetailsPage';
 
-const App = () => {
+function App() {
     return (
         <Router>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/details/:id" element={<DetailsPage />} />
-                    <Route path="/favorites" element={<FavoritesPage />} />
-                </Routes>
-            </Layout>
+            <Routes>
+                <Route path="/" element={<Layout><HomePage /></Layout>} />
+                <Route path="/details/:type/:id" element={<Layout><DetailsPage /></Layout>} />
+            </Routes>
         </Router>
     );
-};
+}
 
 export default App;

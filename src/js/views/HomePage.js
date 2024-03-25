@@ -1,44 +1,73 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { FavoritesContext } from '../store/FavoritesContext';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import CharCard from '../component/CharCard';
 import PlanetCard from '../component/PlanetCard';
+import VehicleCard from '../component/VehicleCard';
+import { useAppContext } from '../store/appContext';
 
 function HomePage() {
-  // Funcation to store data for people, vehicles, and planets.
-  const { addFavorite } = useContext(FavoritesContext);
-  const [people, setPeople] = useState([]);
-  const [planets, setPlanets] = useState([]);
+  const { store, actions } = useAppContext();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Function to fetch data from SWAPI
   useEffect(() => {
-    // Fetch people from SWAPI
-    fetch('https://www.swapi.tech/api/people/')
-      .then(response => response.json())
-      .then(data => setPeople(data.results))
-      .catch(error => console.error("There was an error fetching the people data: ", error));
+    Promise.all([
+      actions.fetchCharacters(),
+      actions.fetchPlanets(),
+      actions.fetchVehicles()
+    ]).catch(error => {
+      console.error("Error fetching data:", error);
+      setError(error);
+    }).finally(() => setLoading(false));
+  }, [actions]);
 
-    // Fetch planets from SWAPI
-    fetch('https://www.swapi.tech/api/planets/')
-      .then(response => response.json())
-      .then(data => setPlanets(data.results))
-      .catch(error => console.error("There was an error fetching the planets data: ", error));
-  }, []);
+  if (loading) {
+    return (
+      <Container className="text-center my-5">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="text-center my-5">
+        <p>Error: {error}</p>
+      </Container>
+    );
+  }
 
   return (
-    <div>
-      <h1>Star Wars Characters</h1>
-      <div className="row">
-        {people.map(person => (
-          <CharCard key={person.uid} character={person} addFavorite={addFavorite} />
+    <Container>
+      <h2 className="my-4">Characters</h2>
+      <Row>
+        {store.characters.map(character => (
+          <Col key={character.id} sm={12} md={6} lg={4} xl={3}>
+            <CharCard character={character} />
+          </Col>
         ))}
-      </div>
-      <h1>Star Wars Planets</h1>
-      <div className="row">
-        {planets.map(planet => (
-          <PlanetCard key={planet.uid} planet={planet} addFavorite={addFavorite} />
+      </Row>
+
+      <h2 className="my-4">Planets</h2>
+      <Row>
+        {store.planets.map(planet => (
+          <Col key={planet.id} sm={12} md={6} lg={4} xl={3}>
+            <PlanetCard planet={planet} />
+          </Col>
         ))}
-      </div>
-    </div>
+      </Row>
+
+      <h2 className="my-4">Vehicles</h2>
+      <Row>
+        {store.vehicles.map(vehicle => (
+          <Col key={vehicle.id} sm={12} md={6} lg={4} xl={3}>
+            <VehicleCard vehicle={vehicle} />
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 }
 
